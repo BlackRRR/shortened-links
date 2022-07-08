@@ -6,12 +6,11 @@ import (
 )
 
 type Services struct {
-	Links links.Ser
+	Links *links.LinksService
 }
 
 func InitServices(repository *repository.Repositories) *Services {
 	//Init Links service
 	linksSrv := links.InitLinksService(repository.Links)
-
 	return &Services{Links: linksSrv}
 }

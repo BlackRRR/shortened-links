@@ -5,14 +5,14 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r *PostgresRepository) ChangeUrl(ctx context.Context, url string, link string) error {
+func (r *PostgresRepository) ChangeUrl(ctx context.Context, url string, shortLink string) error {
 	_, err := r.connPool.Exec(ctx, `
 INSERT INTO links 
 		(url,
-		link)
+		short_link)
 VALUES ($1,$2);`,
 		url,
-		link)
+		shortLink)
 	if err != nil {
 		return errors.Wrap(err, "failed to change url from Exec")
 	}
@@ -20,13 +20,13 @@ VALUES ($1,$2);`,
 	return nil
 }
 
-func (r *PostgresRepository) GetUrl(ctx context.Context, link string) (string, error) {
-	var URL string
+func (r *PostgresRepository) GetUrl(ctx context.Context, shortLink string) (string, error) {
+	var url string
 
-	err := r.connPool.QueryRow(ctx, `SELECT url FROM links WHERE link = $1`, link).Scan(&URL)
+	err := r.connPool.QueryRow(ctx, `SELECT url FROM links WHERE short_link = $1`, shortLink).Scan(&url)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to get url from QueryRow")
 	}
 
-	return URL, nil
+	return url, nil
 }

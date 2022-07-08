@@ -6,7 +6,7 @@ import (
 )
 
 func (s *Server) ChangeURL(ctx context.Context, request *ChangeUrlRequest) (*ChangeUrlResponse, error) {
-	shortLink, err := s.Links.ChangeURL(ctx, request.URL)
+	shortLink, err := s.Links.ChangeURL(ctx, request.Url)
 	if err != nil {
 		return &ChangeUrlResponse{
 			Result:  models.ResultERR,

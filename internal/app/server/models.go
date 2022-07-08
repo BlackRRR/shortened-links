@@ -7,7 +7,7 @@ import "github.com/BlackRRR/shortened-Links/internal/models"
 //////////////////////////
 
 type ChangeUrlRequest struct {
-	URL string `json:"url"`
+	Url string `json:"url"`
 }
 
 type ChangeUrlResponse struct {

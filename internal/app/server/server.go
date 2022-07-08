@@ -12,8 +12,10 @@ import (
 )
 
 type Server struct {
-	Links links.Ser
+	Links *links.LinksService
 }
+
+// Server Init
 
 func NewServer(service *services.Services) *Server {
 	return &Server{Links: service.Links}

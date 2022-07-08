@@ -8,9 +8,10 @@ import (
 	"github.com/pkg/errors"
 )
 
+//Linker any database that satisfies the methods can be used
 type Linker interface {
-	ChangeUrl(ctx context.Context, url string, link string) error
-	GetUrl(ctx context.Context, link string) (string, error)
+	ChangeUrl(ctx context.Context, url string, shortLink string) error
+	GetUrl(ctx context.Context, shortLink string) (string, error)
 }
 
 type Repositories struct {

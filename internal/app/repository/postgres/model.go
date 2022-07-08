@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS links(
 	short_link text UNIQUE
 );`)
 	if err != nil {
-		return nil, errors.Wrap(err, "create links table")
+		return nil, errors.Wrap(err, "failed to create links table")
 	}
 	rows.Close()
 

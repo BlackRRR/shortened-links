@@ -27,13 +27,13 @@ func initLinksHandlers(h *mux.Router, s *Server, opts []httptransport.ServerOpti
 		return s.GetURL(ctx, r)
 	}
 
-	h.Methods("POST").Path("/api/transaction/create-new-transaction/").Handler(httptransport.NewServer(
+	h.Methods("POST").Path("/change-url").Handler(httptransport.NewServer(
 		ChangeUrlEndpoint,
 		decodeChangeUrlRequest,
 		newEncodeResponse(),
 		opts...))
 
-	h.Methods("GET").Path("/api/transaction/check-status-transaction/{link}").Handler(httptransport.NewServer(
+	h.Methods("GET").Path("/{link}").Handler(httptransport.NewServer(
 		GetUrlEndpoint,
 		decodeGetUrlRequest,
 		newEncodeResponse(),

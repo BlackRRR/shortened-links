@@ -2,8 +2,8 @@ package repository
 
 import (
 	"context"
-	"github.com/BlackRRR/shortened-Links/internal/app/repository/links"
-	"github.com/BlackRRR/shortened-Links/internal/app/repository/postgres"
+	"github.com/BlackRRR/shortened-links/internal/app/repository/links"
+	"github.com/BlackRRR/shortened-links/internal/app/repository/postgres"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/pkg/errors"
 )

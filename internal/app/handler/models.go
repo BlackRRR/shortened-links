@@ -1,6 +1,4 @@
-package server
-
-import "github.com/BlackRRR/shortened-Links/internal/models"
+package handler
 
 //////////////////////////
 //Change Url Request
@@ -11,9 +9,7 @@ type ChangeUrlRequest struct {
 }
 
 type ChangeUrlResponse struct {
-	Result  models.Result         `json:"result"`
 	Payload *ShortenedLinkPayload `json:"payload"`
-	Error   *models.ServerError   `json:"error"`
 }
 
 type ShortenedLinkPayload struct {
@@ -21,17 +17,11 @@ type ShortenedLinkPayload struct {
 }
 
 //////////////////////////
-//Get Url Request
+//Get Url Response
 //////////////////////////
 
-type GetUrlRequest struct {
-	Link string `json:"link"`
-}
-
 type GetUrlResponse struct {
-	Result  models.Result       `json:"result"`
-	Payload *UrlPayload         `json:"payload"`
-	Error   *models.ServerError `json:"error"`
+	Payload *UrlPayload `json:"payload"`
 }
 
 type UrlPayload struct {

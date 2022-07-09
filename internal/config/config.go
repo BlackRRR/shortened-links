@@ -25,10 +25,10 @@ type DBConnConfig struct {
 
 func InitConfig() (*Config, error) {
 	//Get path to config
-	CfgPath := os.Getenv("CONFIG_PATH")
+	cfgPath := os.Getenv("CONFIG_PATH")
 
 	//Open config file
-	configFile, err := os.Open(CfgPath)
+	configFile, err := os.Open(cfgPath + "config.yaml")
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to open config")
 	}

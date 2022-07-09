@@ -2,18 +2,23 @@ package main
 
 import (
 	"context"
-	"github.com/BlackRRR/shortened-links/internal/app/handler"
-	"github.com/BlackRRR/shortened-links/internal/app/repository"
-	"github.com/BlackRRR/shortened-links/internal/app/services"
-	"github.com/BlackRRR/shortened-links/internal/config"
+	"github.com/BlackRRR/shortened-Links/internal/app/handler"
+	"github.com/BlackRRR/shortened-Links/internal/app/repository"
+	"github.com/BlackRRR/shortened-Links/internal/app/services"
+	"github.com/BlackRRR/shortened-Links/internal/config"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	ctx := context.TODO()
 
 	//Initializing config
@@ -24,7 +29,7 @@ func main() {
 
 	log.Println("init config success")
 
-	dataBase, err := repository.InitDataBase(ctx, cfg.RepositoryCfg)
+	dataBase, err := pgxpool.ConnectConfig(ctx, cfg.RepositoryCfg)
 	if err != nil {
 		log.Fatalf("failed to init database: %s", err.Error())
 	}

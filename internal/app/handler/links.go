@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/BlackRRR/shortened-links/internal/models"
+	"github.com/BlackRRR/shortened-Links/internal/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

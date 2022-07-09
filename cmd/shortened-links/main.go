@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/BlackRRR/shortened-Links/internal/app/repository"
-	"github.com/BlackRRR/shortened-Links/internal/app/server"
-	"github.com/BlackRRR/shortened-Links/internal/app/services"
-	"github.com/BlackRRR/shortened-Links/internal/config"
+	"github.com/BlackRRR/shortened-links/internal/app/handler"
+	"github.com/BlackRRR/shortened-links/internal/app/repository"
+	"github.com/BlackRRR/shortened-links/internal/app/services"
+	"github.com/BlackRRR/shortened-links/internal/config"
 	"log"
 	"net/http"
 	"os"
@@ -42,12 +42,14 @@ func main() {
 
 	log.Println("init services success")
 
-	httpHandler := server.MakeHTTPHandler(server.NewServer(svc))
+	handlers := handler.NewHandler(svc)
+
+	log.Println("init handlers success")
 
 	go func() {
 
 		log.Println("http server started on port:", cfg.ServicePort)
-		serviceErr := http.ListenAndServe(":"+cfg.ServicePort, httpHandler)
+		serviceErr := http.ListenAndServe(":"+cfg.ServicePort, handlers.InitRoutes())
 		if serviceErr != nil {
 			log.Fatalf("http handler was stoped by err: %s", serviceErr.Error())
 		}

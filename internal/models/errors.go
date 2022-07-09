@@ -1,23 +1,19 @@
 package models
 
+import (
+	"github.com/gin-gonic/gin"
+	"log"
+)
+
 const (
 	InternalLinksServerError = "transaction_server_error"
 )
 
-type Error string
-
-func (e Error) Error() string {
-	return string(e)
+type errorResponse struct {
+	Message string `json:"message"`
 }
 
-type ServerError struct {
-	Code    string
-	Message string
-}
-
-func NewLinksError(err error) *ServerError {
-	return &ServerError{
-		Code:    InternalLinksServerError,
-		Message: err.Error(),
-	}
+func NewLinksError(c *gin.Context, statusCode int, message string) {
+	log.Println(message)
+	c.AbortWithStatusJSON(statusCode, errorResponse{message})
 }

@@ -5,10 +5,6 @@ import (
 	"log"
 )
 
-const (
-	InternalLinksServerError = "transaction_server_error"
-)
-
 type errorResponse struct {
 	Message string `json:"message"`
 }

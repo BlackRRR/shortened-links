@@ -7,6 +7,6 @@ FROM golang:latest
 WORKDIR /app
 
 COPY . .
-RUN go build ./cmd/shortened-linker
+RUN go build ./cmd/shortened-links
 
-CMD ["./shortened-linker"]
+CMD ["./shortened-links"]

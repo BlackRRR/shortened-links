@@ -1,4 +1,4 @@
-package services
+package links
 
 import (
 	"context"
@@ -11,25 +11,18 @@ var (
 	symbolsLength = 10
 )
 
-//go:generate mockgen -source=links.go -destination=mocks/mock.go
-
-type Linker interface {
-	ChangeUrl(ctx context.Context, url string, shortLink string) error
-	GetUrl(ctx context.Context, shortLink string) (string, error)
-}
-
 type LinksService struct {
-	Linker
+	Repository
 }
 
-func InitLinksService(links Linker) *LinksService {
+func InitLinksService(links Repository) *LinksService {
 	return &LinksService{links}
 }
 
 func (s *LinksService) ChangeURL(ctx context.Context, url string) (string, error) {
 	shortLink := GetShortURL()
 
-	err := s.Linker.ChangeUrl(ctx, url, shortLink)
+	shortLink, err := s.Repository.ChangeUrl(ctx, url, shortLink)
 	if err != nil {
 		return "", errors.Wrap(err, "service: failed to change url")
 	}
@@ -38,9 +31,13 @@ func (s *LinksService) ChangeURL(ctx context.Context, url string) (string, error
 }
 
 func (s *LinksService) GetURL(ctx context.Context, shortLink string) (string, error) {
-	url, err := s.Linker.GetUrl(ctx, shortLink)
+	url, err := s.Repository.GetUrl(ctx, shortLink)
 	if err != nil {
 		return "", errors.Wrap(err, "service: failed to get url")
+	}
+
+	if url == "" {
+		return "", nil
 	}
 
 	return url, nil

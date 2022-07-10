@@ -1,22 +1,25 @@
 package links
 
-import "context"
+import (
+	"context"
+)
 
-type Links struct {
+type MapRepository struct {
 	link map[string]string
 }
 
-func InitLinksRepository() *Links {
-	linksRep := &Links{link: make(map[string]string)}
+func NewLinksRepository() *MapRepository {
+	linksRep := &MapRepository{link: make(map[string]string)}
 
 	return linksRep
 }
 
-func (l *Links) ChangeUrl(_ context.Context, url string, shortLink string) error {
-	l.link[shortLink] = url
-	return nil
+func (r *MapRepository) ChangeUrl(_ context.Context, url string, shortLink string) (string, error) {
+	r.link[shortLink] = url
+
+	return shortLink, nil
 }
 
-func (l *Links) GetUrl(_ context.Context, shortLink string) (string, error) {
-	return l.link[shortLink], nil
+func (r *MapRepository) GetUrl(_ context.Context, shortLink string) (string, error) {
+	return r.link[shortLink], nil
 }

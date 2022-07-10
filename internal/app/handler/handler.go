@@ -1,16 +1,16 @@
 package handler
 
 import (
-	"github.com/BlackRRR/shortened-Links/internal/app/services"
+	"github.com/BlackRRR/shortened-links/internal/app/services"
 	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
-	Links *services.LinksService
+	*services.Services
 }
 
 func NewHandler(service *services.Services) *Handler {
-	return &Handler{Links: service.Links}
+	return &Handler{service}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {

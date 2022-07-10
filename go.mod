@@ -1,4 +1,4 @@
-module github.com/BlackRRR/shortened-Links
+module github.com/BlackRRR/shortened-links
 
 go 1.17
 

@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/BlackRRR/shortened-Links/internal/app/handler"
-	"github.com/BlackRRR/shortened-Links/internal/app/repository"
-	"github.com/BlackRRR/shortened-Links/internal/app/services"
-	"github.com/BlackRRR/shortened-Links/internal/config"
+	"github.com/BlackRRR/shortened-links/internal/app/handler"
+	"github.com/BlackRRR/shortened-links/internal/app/repository"
+	"github.com/BlackRRR/shortened-links/internal/app/services"
+	"github.com/BlackRRR/shortened-links/internal/config"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
 	"math/rand"
@@ -52,7 +52,6 @@ func main() {
 	log.Println("init handlers success")
 
 	go func() {
-
 		log.Println("http server started on port:", cfg.ServicePort)
 		serviceErr := http.ListenAndServe(":"+cfg.ServicePort, handlers.InitRoutes())
 		if serviceErr != nil {

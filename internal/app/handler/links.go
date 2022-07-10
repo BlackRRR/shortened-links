@@ -1,22 +1,32 @@
 package handler
 
 import (
-	"github.com/BlackRRR/shortened-Links/internal/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
 
 func (h *Handler) ChangeURL(c *gin.Context) {
 	var req ChangeUrlRequest
 
 	if err := c.BindJSON(&req); err != nil {
-		models.NewLinksError(c, http.StatusBadRequest, "invalid req body")
+		NewLinksError(c, http.StatusBadRequest, "invalid req body")
 		return
 	}
 
-	link, err := h.Links.ChangeURL(c, req.Url)
+	if !strings.Contains(req.Url, "https://") && !strings.Contains(req.Url, "http://") {
+		NewLinksError(c, http.StatusBadRequest, "invalid req body")
+		return
+	}
+
+	if req.Url == "" {
+		NewLinksError(c, http.StatusBadRequest, "invalid req body")
+		return
+	}
+
+	link, err := h.Services.ChangeURL(c, req.Url)
 	if err != nil {
-		models.NewLinksError(c, http.StatusInternalServerError, err.Error())
+		NewLinksError(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -30,9 +40,19 @@ func (h *Handler) ChangeURL(c *gin.Context) {
 func (h *Handler) GetURL(c *gin.Context) {
 	link := c.Param("link")
 
-	url, err := h.Links.GetURL(c, link)
+	if link == "" {
+		NewLinksError(c, http.StatusInternalServerError, "invalid link")
+		return
+	}
+
+	url, err := h.Services.GetURL(c, link)
 	if err != nil {
-		models.NewLinksError(c, http.StatusInternalServerError, err.Error())
+		NewLinksError(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if url == "" {
+		NewLinksError(c, http.StatusInternalServerError, "no urls in result set")
 		return
 	}
 
